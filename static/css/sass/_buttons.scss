@@ -1,0 +1,33 @@
+/* ======= social icons======= */
+.social-buttons{
+  a{display: inline-block; width:32px; height: 32px; text-align: center; color: #fff; line-height: 36px; background-color:$accent; }
+  a:hover{color: #fff }
+  i{font-size: 18px;}
+  .facebook:hover{background-color: #405D9D}
+  .twitter:hover{background-color: #2C99D7}
+  .instagram:hover{background-color: #C8046C}
+  .youtube:hover{background-color: #E52D27}
+}
+
+/* -------------------- Bootstrap buttons --------------------- */
+.btn{border-radius:0; font-size:12px; line-height:1.7; text-transform:uppercase}
+.btn-default {
+  color:#fff;
+  background-color: $accent;
+  border-color: $accent;
+}
+.btn-default:hover,
+.btn-default:focus {
+  color: #fff;
+  background-color:$primary;
+  border-color: $primary;
+}
+.btn-default:active,
+.btn-default.active {
+  background-color: $primary;
+}
+.btn-default:disabled,
+.btn-default[disabled] {
+  background-color: #e0e0e0;
+  background-image: none;
+}

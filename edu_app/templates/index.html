@@ -1,0 +1,412 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+<div class="top_items" style="display: flex; justify-content: center;width: 100%;">
+    {% if messages %}
+    {% for message in messages %}
+    <span class="message my_message_{{ message.tags }} mx-3">{{ message }}</span>
+    {% endfor %}
+    {% endif %}
+</div>
+<style>
+    .my_message_success {
+        background-color: #155724; 
+        color: #d4edda; 
+        border-color: #c3e6cb; 
+        font-size: 14px; 
+        position: relative;
+        padding: 3px 10px; 
+        border-radius: 3px;
+    }
+    .my_message_error {
+        color: #f8d7da;
+        background-color: #721c24;
+        border-color: #f5c6cb;
+        font-size: 14px; 
+        position: relative;
+        padding: 3px 10px; 
+        border-radius: 3px;
+}
+</style>
+<script>
+    setTimeout(function () {
+        for (let x of document.getElementsByClassName('message')) {
+            x.style.display = 'none';
+        }
+    }, 3000);
+</script>
+{% endif %}
+		<section class="wrap-intro">
+			<div class="blok-slideshow">
+				<!-- ============= BS Carousel  ========== -->
+				<div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+
+					<div class="carousel-inner" role="listbox">
+						{% if main_images %}
+							{% for main_image in main_images %}
+							<div class="item" style="background-image:url({{ MEDIA_URL }}{{ main_image.image.url }})">
+						</div>
+							{% endfor %}
+						{% endif %}
+							<div class="container">
+								<div class="carousel-caption">
+									<h1 class="title">We are awesome education center!</h1>
+								</div> <!--  carousel-caption //  -->
+							</div>  <!--  container //  -->
+						</div> <!--  item //  -->
+					</div>
+					<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div><!-- ============= BS Carousel //  ========== -->
+			</div> <!-- blok-slideshow // -->
+
+			<section class="wrap wrap-collection">
+				<!-- container start -->
+				<div class="container">
+
+					<div class="row no-gutter">
+						<div class="col-sm-3 item-collection">	
+							<article class="item-body">
+								<span class="icon-wrap"><i class="fa fa-book"></i></span>
+								<div class="text-wrap">
+									<h4 class="title">Any kind of latest books can be found</h4>
+								</div>
+							</article>
+						</div><!-- col// -->
+						<div class="col-sm-3 item-collection">	
+							<article class="item-body">
+								<span class="icon-wrap"><i class="fa fa-bus"></i></span>
+								<div class="text-wrap">
+									<h4 class="title">Free transport services for every  student</h4>
+								</div>
+							</article>
+						</div><!-- col// -->
+						<div class="col-sm-3 item-collection">	
+							<article class="item-body">
+								<span class="icon-wrap"><i class="fa fa-university"></i></span>
+								<div class="text-wrap">
+									<h4 class="title"> Modern and flexible classrooms</h4>
+								</div>
+							</article>
+						</div><!-- col// -->
+						<div class="col-sm-3 item-collection">	
+							<article class="item-body">
+								<span class="icon-wrap"><i class="fa fa-wifi"></i></span>
+								<div class="text-wrap">
+									<h4 class="title"> Free high speed wi-fi internet connection </h4>
+								</div>
+							</article>
+						</div><!-- col// -->
+					</div><!-- row // -->
+
+				</div><!-- container //  -->
+			</section> <!-- wrap-collection // -->
+
+		</section>
+		<!-- wrap-intro // -->
+
+		<!-- wrap about -->
+		<section class="wrap wrap-about" style="background-color: white;">
+
+			<!-- container start -->
+			<div class="container">
+
+				<div class="row-sm">
+					<!-- col -->
+					<div class="col-sm-8">
+						<div class="blok">
+							<header class="blok-heading">
+								<h3 class="blok-title"> About us </h3> 
+							</header>
+							<article class="article">
+								<img src="{% static 'photos/about.jpg' %}" class="img-about pull-right" alt="About us">
+								<p>
+									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem nonummy nibh euismod tincidunt ut lacreet dolore magna aliguam erat volutpat. Ut wisis enim ad minim veniam, quis nostrud exerci tution ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+								</p>
+								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem nonummy nibh euismod tincidunt ut lacreet dolore magna aliguam erat volutpat.</p>
+								<p><a href="{% url 'about' %}" class="btn btn-default">Read more</a></p>
+							</article>
+						</div><!-- blok // -->
+
+					</div><!-- col // -->
+
+					<div class="col-sm-4">
+						<aside class="blok">
+							<header class="blok-heading">
+								<h3 class="blok-title"> EVENTS </h3> 
+							</header>
+							<ul class="list-news">
+								{% if news %}
+								{% for new in news %}
+								<li>
+									<div class="date">
+										<span class="year">{{new.date.year}}</span>
+										<span class="day">{{new.date.day}}/{{new.date.month}}</span>
+									</div>
+									<div class="text">
+										<p style="white-space: nowrap; overflow: hidden;  text-overflow: ellipsis;">{{new.text}}</p> 
+										<a href="{% url 'blog' %}">Details</a>
+									</div>
+								</li>
+								{% endfor %}
+
+								{% endif %}
+								
+							</ul>
+						</aside> <!-- blok // -->
+					</div> <!-- col// -->
+				</div> <!-- row// -->
+
+			</div> <!-- container // -->
+		</section> <!-- wrap about //  -->
+
+		<section class="wrap wrap-servis" style="background-color: white;">
+			<div class="container relative">
+				<header class="blok-heading">
+					<a href="{% url 'courses' %}" class="btn btn-default pull-right">All cources</a>
+					<h3 class="blok-title"> Our cources </h3> 
+				</header>
+
+				<div class="row">
+					{% if courses %}
+					{% for course in courses %}
+					<div class="col-sm-3 col-xs-6">
+						<figure  class="servis-item">
+							<div class="img-wrap">
+								<a href="">
+									<img src="{{MEDIA_URL}}{{course.image.url}}" alt="Something">	
+									<span class="item-hover">Details</span>
+								</a>
+							</div><!-- img-wrap// -->
+							<figcaption class="info">
+								<h4 class="title"><a href="#">{{course.name}}</a></h4>		
+								<p class="small">{{course.teachers.describtion}}</p>
+							</figcaption>
+						</figure>
+					</div>
+					{% endfor %}
+					{% endif %}
+					</div><!-- //row -->
+			</div><!-- container // -->
+		</section><!-- wrap-content //  -->
+
+		<section class="wrap wrap-team" style="background-color: white;">
+			<div class="container">
+				<header class="blok-heading">
+					<a href="{% url 'teachers' %}" class="btn btn-default pull-right"> All teachers </a>
+					<h3 class="blok-title"> Our teachers</h3> 
+				</header>
+				<div class="row">
+					<div class="col-sm-3">
+						<aside class="banner1">
+							<div class="caption">
+								<figure class="people-item">
+									<div class="img-wrap img-circle"> <img src="{% static 'photos/man1.jpg' %}"></div> 
+									<figcaption class="text-wrap">
+										<h4 class="title">Mr. John Someone</h4>
+										<p class="small">Director<br> Masters of social science</p>
+									</figcaption>
+								</figure>							
+							</div>
+						</aside>
+					</div> <!--  col// -->
+					<div class="col-sm-9">
+					{% if teachers %}
+						<ul class="row list-img clearfix">
+						{% for teacher in teachers %}
+						<li class="col-md-4 col-sm-6"> <a href="#"> <div class="img-wrap"> <img src="{{MEDIA_URL}}{{teacher.image.url}}"></div> </a>
+								<h4 class="title"><a href="#">{{teacher.name}} {{teacher.family_name}}</a></h4>
+								<p class="small">{{teacher.describtion}}</p>
+							</li>
+						{% endfor %}
+						</ul>
+					{% endif %}
+
+					</div> <!--  col// -->
+				</div>  <!--  row// -->
+			</div><!-- //container -->
+		</section> <!-- wrap-products // -->
+
+		<section class="wrap wrap-blog" style="background-color: white;">
+			<div class="container">
+				<header class="blok-heading">
+					<a href="" class="pull-right btn btn-default">All books</a>
+					<h3 class="blok-title">Learning materials</h3> 
+				</header>
+
+				<div id="owl-blog" class="owl-carousel">
+				{% if materials %}
+				{% for material in materials %}
+					<article class="post-grid">
+							<div class="img-wrap">
+								<img src="{{MEDIA_URL}}{{material.image.url}}">
+								<div class="hovered">
+									<span class="label label-primary"> <i class="fa fa-calendar"></i> <time>{{ material.date | date:"Y-m-d"}}</time> </span>
+									<span class="label label-info"> <i class="fa fa-eye"></i> {{ material.viewed }}  </span>
+									<a href="" class="pull-right">Read more &raquo </a>
+								</div>
+							</div> <!-- img-wrap // -->
+							<div class="text-wrap">
+								<h4 class="title"><a href="#"> {{ material.name }}</a></h4>
+								<p>{{ material.description }}</p>
+								</div> <!-- text-wrap // -->
+					</article>
+				{% endfor %}
+				{% endif %}
+							</div><!-- owl carousel -->
+
+						</div>
+					</section> <!-- wrap-blog // -->
+
+								<section class="wrap wrap-features">
+									<div class="container">
+										<div class="row">
+											<div class="col-sm-6">
+												<header class="blok-heading">
+													<h3 class="blok-title"> Why choose us </h3> 
+												</header>
+
+												<ul class="list-icon row">
+													<li class="col-sm-6">
+														<span class="icon-wrap"> 12</span>
+														<p> modern designed comfort classrooms</p>
+													</li>
+													<li class="col-sm-6">
+														<span class="icon-wrap"> 20 </span>
+														<p> and more expert teachers from all over the world </p>
+													</li>
+													<li class="col-sm-6">
+														<span class="icon-wrap"> 5 </span>
+														<p> thousand  graduated students are happy now </p>
+													</li>
+													<li class="col-sm-6">
+														<span class="icon-wrap"> 50+ </span>
+														<p>  and more free books, tutorials and lessons</p>
+													</li>
+													<li class="col-sm-6">
+														<span class="icon-wrap"> 2 </span>
+														<p> some kind of good something else about us</p>
+													</li>
+													<li class="col-sm-6">
+														<span class="icon-wrap"> 98</span>
+														<p>another statistical number</p>
+													</li>
+												</ul>
+
+											</div> <!-- col// -->
+											<div class="col-sm-6">
+												<header class="blok-heading">
+													<h3 class="blok-title">People say </h3> 
+												</header>
+												<section class="testimonal-wrap">
+													<div id="owl-testimonal" class="owl-testimonal">
+														<article class="testimonal-item">
+															<blockquote class="testimonal-text">
+																<i class="fa fa-quote-left"></i>
+																<p>Lorem ipsum Men yaqinda shu oquv markazda o'qib olim bo'ldim, Siz ham olim bo'ling...
+																	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+																	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+																	consequat. Duis aute irure dolor in reprehenderit.</p>
+																</blockquote>
+																<footer class="testimonal-info">
+																	<div class="img-wrap img-circle"><img src="{% static 'photos/man1.jpg' %}"></div>
+																	<div class="text-wrap">
+																		<h4 class="title"> Falonchaev Faloncha	</h4>
+																		<span class="small">Professor of arts</span>
+																	</div>
+																</footer>
+															</article><!--  testimonal-item// -->
+															<article class="testimonal-item">
+																<blockquote class="testimonal-text">
+																	<i class="fa fa-quote-left"></i>
+																	<p>Hello you area awesome Men yaqinda shu o'quv markazda o'qib olim bo'ldim, Siz ham olim bo'ling...
+																		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+																		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+																		consequat. Duis aute irure dolor in reprehenderit.</p>
+																	</blockquote>
+																	<footer class="testimonal-info">
+																		<div class="img-wrap img-circle"><img src="{% static 'photos/man1.jpg' %}"></div>
+																		<div class="text-wrap">
+																			<h4 class="title"> Michael Faloncha	</h4>
+																			<span class="small">Student</span>
+																		</div>
+																	</footer>
+																</article><!--  testimonal-item// -->
+																<article class="testimonal-item">
+																	<blockquote class="testimonal-text">
+																		<i class="fa fa-quote-left"></i>
+																		<p>Good day Siz ham olim bo'ling...
+																			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+																			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+																			consequat. Duis aute irure dolor in reprehenderit.</p>
+																		</blockquote>
+																		<footer class="testimonal-info">
+																			<div class="img-wrap img-circle"><img src="{% static 'photos/man1.jpg' %}"></div>
+																			<div class="text-wrap">
+																				<h4 class="title"> John Faloncha	</h4>
+																				<span class="small">Teacher</span>
+																			</div>
+																		</footer>
+																	</article><!--  testimonal-item// -->
+																</div><!--  owl-carousel // -->
+																<div class="testimonal-controls">
+																	<a class="btn btn-default owl-prev"> <i class="fa fa-chevron-left"></i> </a>
+																	<a class="btn btn-default owl-next">  <i class="fa fa-chevron-right"></i>  </a>
+																</div>
+															</section><!--  testimonal-wrap// -->
+														</div> <!-- col// -->
+													</div> <!-- row// -->
+												</div><!--  container // -->
+											</section> <!-- wrap-partners // -->
+
+											<section class="wrap-contact">
+												<div class="container">
+													<div class="row">
+														<div class="col-sm-8"> 	
+															<article class="blok-offer">
+																<h1 class="hero">Join us for free now!</h1> 
+																<p>Choose a right place, we welcome you <br><i class="fa fa-phone-square"></i> +123 45 66 55 </p>
+															</article>
+														</div>
+														<div class="col-sm-4"> 
+															<aside class="blok-form">
+																<form>
+																	<div class="blok-body">
+																		<h4 class="title">Need support?</h4>
+																		<p>
+																			Just fill this form and we contact you
+																		</p>
+																		<div class="form-group">
+																			<input type="text" class="form-control" placeholder="Name">
+																		</div>
+																		<div class="form-group">
+																			<input type="text" class="form-control" placeholder="Email">
+																		</div>
+																		<div class="form-group">
+																			<input type="text" class="form-control" value="+998 " placeholder="Phone">
+																		</div>
+																		<div class="form-group">
+																			<input type="text" class="form-control" value="" placeholder="Adres">
+																		</div>
+																		<div class="form-group">
+																			<input type="submit" class="btn btn-block btn-info" value="Send">
+																		</div>
+
+																	</div><!--  blok-body // -->
+																</form>
+															</aside>
+														</div>
+													</div><!--  row//  -->
+												</div> <!--  container // -->
+											</section>
+		<script>
+		document.getElementsByClassName("item")[0].classList.add("active");
+		</script>
+{% endblock content %}

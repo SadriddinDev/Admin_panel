@@ -1,0 +1,116 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load my_functions %}
+{% block dashboard %}
+<li class="">
+    <a href="{% url 'main_admin' %}">
+        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+    </a>
+</li>
+{% if dashboard_models_name %}
+<li class="header nav-small-cap">Jadvallar</li>
+{% for model_name in dashboard_models_name %}
+<li {% if model_name == current_url %} class="active" {% endif %}>
+    <a href="{% url model_name %}">
+        &nbsp;&nbsp;<i style="font-style: normal;">{{forloop.counter}}</i>&nbsp; <span class="model_name_for_base_2">{{ model_name|capfirst }}s</span>
+    </a>
+</li>
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block content %}
+<form action="{% url 'comment' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<div class="top_items" style="display: flex; justify-content: space-between; position: absolute; width: 400px; margin-left: 200px;">
+    {% if messages %}
+    {% for message in messages %}
+    <span class="message my_message_{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+    {% endif %}
+</div>
+<style>
+    .my_message_success {
+        background-color: #155724; 
+        color: #d4edda; 
+        border-color: #c3e6cb; 
+        font-size: 14px; 
+        position: relative;
+        padding: 3px 10px; 
+        border-radius: 3px;
+    }
+    .my_message_error {
+        color: #f8d7da;
+        background-color: #721c24;
+        border-color: #f5c6cb;
+        font-size: 14px; 
+        position: relative;
+        padding: 3px 10px; 
+        border-radius: 3px;
+    }
+</style>
+<div class="top_items2" style="display: flex; justify-content: space-between;">
+    <span style="text-align: right; display: block;"><button type="submit" style="border: 2px dashed rgba(85, 79, 79, 0.199); padding: 5px; border-radius: 3px; color: red;" href="{% url 'comment_new_data' %}"><img src="{% static 'admin_img/icon-deletelink.svg' %}" alt=""> Tanlanganlarni o'chirish</button></span>
+    <span style="text-align: right; display: block;"><a style="border: 2px dashed rgba(85, 79, 79, 0.199); padding: 5px; border-radius: 3px; color: green;" href="{% url 'comment_new_data' %}"><img src="{% static 'admin_img/icon-addlink.svg' %}" alt=""> Ma'lumot qo'shish</a></span>
+</div>
+<div class="box-body">
+    <div class="table-responsive">
+        {% if page_obj %}
+        <table id="example5" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="checkbox" style="padding: 0; margin: 0; width: 10px;"><input type="checkbox" onchange="select_fun(this)" id="basic_checkbox"><label for="basic_checkbox" style="font-size: 13px; font-weight: 500; margin-top: 15px;"></label></th>
+                    {% for current_field_name in current_field_names %}
+                    <th>{{ current_field_name|to_slesh }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in page_obj %}
+                <tr>
+                    <td class="checkbox" style="padding: 0; margin: 0; width: 10px;"><input type="checkbox" name="_checkbox" value="{{ data.id }}" id="checkbox{{ forloop.counter }}"><label for="checkbox{{ forloop.counter }}" style="font-size: 13px; font-weight: 500; margin-top: 15px;"></label></td>
+                    <td><a style="color: blue;" href="{% url 'comment_change_data' id=data.id %}">{{ forloop.counter|add:count }}</a></td>
+                    <td class="table_data">{{ data.news_id.name }}</td>
+                    <td class="table_data">{{ data.text }}</td>
+                    <td class="table_data">{{ data.user }}</td>
+                    <td>{{ data.date|date:'d-m-y' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!--  -->
+        {% include 'pagination.html' %}
+        <!--  -->
+        {% else %}
+        <h4>Hozircha bu jadvalda ma'lumot yo'q.</h4>
+        {% endif %}
+    </div>
+</div>
+</form>
+
+<script>
+    document.querySelectorAll('.table_data').forEach(url => {
+        console.log(url.innerText.length);
+        if (url.innerText.length > 20) {
+            url.innerText = url.innerText.slice(0, 20) + '...'
+        }
+    })
+    function select_fun(v) {
+        if (v.checked == true) {
+        document.getElementsByName('_checkbox').forEach(e => {
+            e.checked = true;
+        })}
+        else {
+        document.getElementsByName('_checkbox').forEach(e => {
+            e.checked = false;
+        })}
+    }
+    setTimeout(function () {
+        for(let x of document.getElementsByClassName('message')) {
+            x.style.display = 'none';
+        }
+        document.querySelector(".top_items").style.justifyContent = 'flex-end';
+    }, 3000);
+
+
+</script>
+{% endblock %}

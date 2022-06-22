@@ -1,0 +1,80 @@
+{% if page_obj.paginator.num_pages > 1 %}
+<style>
+    .container {
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0.5vh 5px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .pagination {
+        margin: 25px 0 15px 0;
+    }
+
+    .pagination,
+    .pagination li a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .pagination li a {
+        text-decoration: none;
+        height: 35px;
+        width: 30px;
+        font-size: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.35);
+    }
+    .pagination_active {
+        background-color: #1e88e5 !important;
+        color: white !important;
+    }
+    .pagination li.icon a {
+        min-width: 80px;
+    }
+</style>
+
+<div class="container">
+    <ul class="pagination">
+        
+        <li class="icon">
+            <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">Oldingi</a>
+        </li>
+        
+        <li><a {% if page_obj.number == 1 %} class="pagination_active" {% endif %} href="?page=1">1</a></li>
+        
+        {% if page_obj.number > 4 %}
+        <li style="font-size: 25px; letter-spacing: 5px;">&nbsp;...&nbsp;</li>
+        {% endif %}
+        {% if page_obj.number > 3 %}
+        <li><a href="?page={{ page_obj.number|add:'-2' }}">{{ page_obj.number|add:'-2'}}</a></li>
+        {% endif %}
+        {% if page_obj.number > 2 %}
+        <li><a href="?page={{ page_obj.number|add:'-1' }}">{{ page_obj.number|add:'-1' }}</a></li>
+        {% endif %}
+        {% if page_obj.number > 1 %}
+        <li><a class="pagination_active" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+        {% endif %}
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'1' %}
+        <li><a href="?page={{ page_obj.number|add:'1' }}">{{ page_obj.number|add:'1' }}</a></li>
+        {% endif %}
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'2' %}
+        <li><a href="?page={{ page_obj.number|add:'2' }}">{{ page_obj.number|add:'2' }}</a></li>
+        {% endif %}
+        {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+        <li le="font-size: 25px; letter-spacing: 5px;">&nbsp;...&nbsp;</li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+        {% endif %}
+        <li class="icon">
+            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}">Keyingi</a>
+        </li>
+        
+    </ul>
+</div>
+{% endif %}

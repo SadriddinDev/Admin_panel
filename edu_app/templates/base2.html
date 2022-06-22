@@ -1,0 +1,169 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <title>Admin - Dashboard</title>
+    
+	<!-- Bootstrap 4.0-->
+	<link rel="stylesheet" href="{% static 'assets/vendor_components/bootstrap/dist/css/bootstrap.css' %}">
+	
+	<!-- Bootstrap extend-->
+	<link rel="stylesheet" href="{% static 'main/css/bootstrap-extend.css' %}">
+	
+	<!-- theme style -->
+	<link rel="stylesheet" href="{% static 'main/css/master_style.css' %}">
+	
+	<!-- Fab Admin skins -->
+	<link rel="stylesheet" href="{% static 'main/css/skins/_all-skins.css' %}">
+   
+    <!-- Vector CSS -->
+    <link href="{% static 'assets/vendor_components/jvectormap/lib2/jquery-jvectormap-2.0.2.css' %}" rel="stylesheet" />
+	
+	<!-- Morris charts -->
+	<link rel="stylesheet" href="{% static 'assets/vendor_components/morris.js/morris.css' %}">
+  {% block css %}{% endblock %} 
+  </head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="index.html" class="logo">
+      <!-- mini logo -->
+	  <b class="logo-mini">
+		  <span class="light-logo"><img src="{% static 'images/logo-light.png' %}" alt="logo"></span>
+	  </b>
+      <!-- logo-->
+      <span class="logo-lg">
+          Admin panel
+	  </span>
+    </a>
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+	  <div>
+		  <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+			<span class="sr-only">Toggle navigation</span>
+		  </a>
+
+	  </div>
+    </nav>
+  </header>
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar-->
+    <section class="sidebar">
+      
+      <!-- sidebar menu-->
+      <ul class="sidebar-menu" data-widget="tree">
+        {% block dashboard %} {% endblock %}
+        
+      </ul>
+
+    </section>
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {% if current_url %}
+        <span class="model_name_for_base_2">{{current_url|capfirst}}</span>
+        <small>jadvali</small>
+        {% else %}
+        Dashboard
+        <small>Boshqaruv paneli</small>
+        {% endif %}
+        <small style="color: red; margin-left: 30px;"><form action="{% url 'logout' %}" method="post">{% csrf_token %}<button type="submit" style="padding: 0 5px; background-color: white; outline: none;" class="alert alert-outline-danger">Logout</button></form></small>
+      </h1>
+      <ol class="breadcrumb">
+        {% for i in right_url %}
+        <li class="breadcrumb-item"><a class="model_name_for_base_2" href="{% if i.2 %}{% url i.1 id=i.2 %}{% else %}{% url i.1 %} {% endif %}"><i></i> {{i.0}}</a></li>
+        {% endfor %}
+      </ol>
+    </section>
+    <script>
+      document.querySelectorAll('.model_name_for_base_2').forEach(e => {
+        e.innerText = e.innerText.replaceAll('_', ' ')
+      })
+    </script>
+    <!-- Main content -->
+    <section class="content">
+      
+      {% block content %}{% endblock %} 
+      <style>
+        table tbody tr td:nth-child(2) a {
+          font-size: 16px;
+          font-family: sans-serif;
+        }
+      </style>
+	</section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+</div>
+<!-- ./wrapper -->
+  	
+	 
+{% block js %}{% endblock %} 
+	<!-- jQuery 3 -->
+	<script src="{% static 'assets/vendor_components/jquery/dist/jquery.js' %}"></script>
+	
+	<!-- jQuery UI 1.11.4 -->
+	<script src="{% static 'assets/vendor_components/jquery-ui/jquery-ui.js' %}"></script>
+	
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+	  $.widget.bridge('uibutton', $.ui.button);
+	</script>
+	
+	<!-- popper -->
+	<script src="{% static 'assets/vendor_components/popper/dist/popper.min.js' %}"></script>
+	
+	<!-- Bootstrap 4.0-->
+	<script src="{% static 'assets/vendor_components/bootstrap/dist/js/bootstrap.js"' %}></script>	
+	
+	<!-- ChartJS -->
+	<script src="{% static 'assets/vendor_components/chart.js-master/Chart.min.js' %}"></script>
+	
+	<!-- Slimscroll -->
+	<script src="{% static 'assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+	
+	<!-- FastClick -->
+	<script src="{% static 'assets/vendor_components/fastclick/lib/fastclick.js' %}"></script>
+	
+	<!-- peity -->
+	<script src="{% static 'assets/vendor_components/jquery.peity/jquery.peity.js' %}"></script>
+	
+	<!-- Morris.js charts -->
+	<script src="{% static 'assets/vendor_components/raphael/raphael.min.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/morris.js/morris.min.js' %}"></script>
+	
+	<!-- Fab Admin App -->
+	<script src="{% static 'main/js/template.js' %}"></script>
+	
+	<!-- Fab Admin dashboard demo (This is only for demo purposes) -->
+	<script src="{% static 'main/js/pages/dashboard.js' %}"></script>
+	
+	<!-- Fab Admin for demo purposes -->
+	<script src="{% static 'main/js/demo.js' %}"></script>	
+	
+    <!-- Vector map JavaScript -->
+    <script src="{% static 'assets/vendor_components/jvectormap/lib2/jquery-jvectormap-2.0.2.min.js' %}"></script>
+    <script src="{% static 'assets/vendor_components/jvectormap/lib2/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <script src="{% static 'assets/vendor_components/jvectormap/lib2/jquery-jvectormap-us-aea-en.js' %}"></script>
+	
+</body>
+</html>

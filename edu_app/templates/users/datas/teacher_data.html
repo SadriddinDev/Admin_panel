@@ -1,0 +1,212 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load my_functions %}
+{% block dashboard %}
+<li class="">
+    <a href="{% url 'main_admin' %}">
+        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+    </a>
+</li>
+{% if dashboard_models_name %}
+<li class="header nav-small-cap">Jadvallar</li>
+{% for model_name in dashboard_models_name %}
+<li {% if model_name == current_url %} class="active" {% endif %}>
+    <a href="{% url model_name %}">
+        &nbsp;&nbsp;<i style="font-style: normal;">{{forloop.counter}}</i>&nbsp; <span class="model_name_for_base_2">{{ model_name|capfirst }}s</span>
+    </a>
+</li>
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="top_items" style="display: flex; justify-content: center;width: 100%;">
+    {% if messages %}
+    {% for message in messages %}
+    <span class="message my_message_{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+    {% endif %}
+</div>
+<style>
+    .my_message_success {
+        background-color: #155724; 
+        color: #d4edda; 
+        border-color: #c3e6cb; 
+        font-size: 14px; 
+        position: relative;
+        padding: 3px 10px; 
+        border-radius: 3px;
+    }
+    .my_message_error {
+        color: #f8d7da;
+        background-color: #721c24;
+        border-color: #f5c6cb;
+        font-size: 14px; 
+        position: relative;
+        padding: 3px 10px; 
+        border-radius: 3px;
+}
+</style>
+<script>
+    setTimeout(function () {
+        for (let x of document.getElementsByClassName('message')) {
+            x.style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+{% if data %}
+<section class="content">
+
+    <!-- Basic Forms -->
+    <div class="box box-solid bg-dark">
+        <div class="box-header with-border">
+            <h4 class="box-title">{{ data }}</h4>
+            <h6 class="box-subtitle">Ma'lumotlarini o'zgartirish bo'limi </h6>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col">
+                    <form action="{% url 'teacher_change_data' id=data.id %}" method="post"
+                        enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <h5>Ismi <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="text" name="name" class="form-control" value="{{ data }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <h5>Familiyasi <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="text" name="family_name" class="form-control"
+                                        value="{{ data.family_name }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Ma'lumot</label>
+                                <textarea name="description" class="form-control" rows="3"
+                                    placeholder="Enter ..." required>{{ data.description }}</textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <h5>Rasm joylashgan joy <span class="text-danger">*</span> <span
+                                        style="font-size: 10px;">Hozirda <a href="{{data.image.url}}"
+                                            style="color: blue;"> {{data.image}}</a></span></h5>
+                                <div class="controls">
+                                    <input type="file" name="image" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <h5>Tug'ilgan kun <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="date" name="birth_day" class="form-control"
+                                        value="{{ data.birth_day|date:'Y-m-d' }}"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <h5>Telefon raqami <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="text" name="tell" class="form-control" value="{{ data.tell }}"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group col-1"></div>
+                            <div class="text-xs-right">
+                                <button type="submit" name="edit" class="btn btn-info">Saqlash</button>
+                                <button type="submit" name="delete" class="btn btn-info" style="color: #f8d7da; background-color: #721c24; border-color: #f5c6cb;">O'chirish</button>
+                            </div>
+                    </form>
+
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+</section>
+&nbsp;
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+
+{% else %}
+<section class="content">
+    <!-- Basic Forms -->
+    <div class="box box-solid bg-dark">
+        <div class="box-header with-border">
+            <h4 class="box-title">Yangi ma'lumot</h4>
+            <h6 class="box-subtitle">Ma'lumotlarni kiritish bo'limi </h6>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col">
+                    <form action="{% url 'teacher_new_data' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <h5>Ismi <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="text" name="name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <h5>Familiyasi <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="text" name="family_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Ma'lumot</label>
+                                <textarea name="description" class="form-control" rows="3"
+                                    placeholder="Enter ..." required></textarea>
+                            </div>
+                            <div class="form-group col-4">
+                                <h5>Rasm joylashgan joy <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="file" name="image" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-4">
+                                <h5>Tug'ilgan kun <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="date" name="birth_day" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-4">
+                                <h5>Telefon raqami <span class="text-danger">*</span></h5>
+                                <div class="controls">
+                                    <input type="text" name="tell" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-1"></div>
+                            <div class="text-xs-right">
+                                <button type="submit" name='save_again' class="btn btn-info">Yana ma'lumot qo'shish</button>
+                                <button type="submit" name='save' class="btn btn-danger">Saqlash</button>
+                            </div>
+                    </form>
+
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+</section>
+&nbsp;
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+{% endif %}
+{% endblock %}
