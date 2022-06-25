@@ -10,7 +10,7 @@ urlpatterns = [
     path('about/', views.about, name="about"),
     path('blog/', views.blog, name="blog"),
     path('courses/', views.courses, name="courses"),
-    path('index/', views.index, name="index"),
+    path('', views.index, name="index"),
     path('teachers/', views.teachers, name="teachers"),
 
     # my admin
